@@ -118,42 +118,6 @@ const SearchResults = () => {
       </div>
     );
 
-  if (loading) {
-    return (
-      <HomeLayout>
-        <div
-          role="status"
-          className="flex justify-center items-center min-h-screen"
-        >
-          <div
-            className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"
-            aria-label="Loading results"
-          />
-          <span className="sr-only">Loading results...</span>
-        </div>
-      </HomeLayout>
-    );
-  }
-
-  if (products.length === 0) {
-    return (
-      <HomeLayout>
-        <div className="text-center py-12">
-          <h2
-            className="text-2xl font-semibold mb-4"
-            role="heading"
-            aria-level={2}
-          >
-            No products found matching "{query}"
-          </h2>
-          <p className="text-gray-600">
-            Try adjusting your search or filters to find what you're looking for
-          </p>
-        </div>
-      </HomeLayout>
-    );
-  }
-
   return (
     <HomeLayout>
       <div className="filter-toggle">
@@ -271,19 +235,51 @@ const SearchResults = () => {
 
       <div className="flex-1">
         <h2 className="text-2xl font-bold mb-6">Search Results for: {query}</h2>
-        <div className="search-container">
-          {products.map((product, index) => (
+
+        {loading && products.length === 0 && (
+          <div className="flex py-4 w-full items-center justify-center">
             <div
-              key={product._id}
-              ref={index === products.length - 1 ? lastProductRef : undefined}
+              role="status"
+              aria-label="Loading results"
+              className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"
             >
-              <ProductItem product={product} />
+              <span className="sr-only">Loading results...</span>
             </div>
-          ))}
+          </div>
+        )}
+
+        <div className="search-container">
+          {products.length > 0 &&
+            products.map((product: any, index: number) => (
+              <div
+                key={product._id}
+                ref={index === products.length - 1 ? lastProductRef : undefined}
+              >
+                <ProductItem product={product} />
+              </div>
+            ))}
         </div>
 
-        {loading && (
-          <div className="flex justify-center py-4">
+        {!loading && products.length === 0 && (
+          <div className="w-full flex items-center justify-center min-h-[400px]">
+            <div className="text-center">
+              <h2
+                className="text-2xl font-semibold mb-4"
+                role="heading"
+                aria-level={2}
+              >
+                No products found matching "{query}"
+              </h2>
+              <p className="text-gray-600">
+                Try adjusting your search or filters to find what you're looking
+                for
+              </p>
+            </div>
+          </div>
+        )}
+
+        {loading && products.length > 0 && (
+          <div className="flex py-4 w-full items-center justify-center">
             <div
               role="status"
               aria-label="Loading more results"
@@ -297,12 +293,6 @@ const SearchResults = () => {
         {!hasMore && products.length > 0 && (
           <div className="text-center text-gray-600 py-4">
             No more products to load
-          </div>
-        )}
-
-        {!loading && products.length === 0 && (
-          <div className="text-center text-gray-600 py-4">
-            No products found for "{query}"
           </div>
         )}
       </div>
