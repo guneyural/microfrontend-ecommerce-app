@@ -1,0 +1,28 @@
+.product-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.product-section {
+  width: 100%;
+}
+
+.product-section img {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .product-container {
+    flex-direction: row;
+  }
+
+  .product-section {
+    width: 50%;
+  }
+}

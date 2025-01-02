@@ -1,0 +1,18 @@
+export const CATEGORIES = [
+  "bags",
+  "electronics",
+  "accessories",
+  "clothing",
+  "fitness",
+  "footwear",
+  "appliances",
+  "outdoor",
+  "lighting",
+  "travel",
+  "smart home",
+  "health",
+  "kitchen",
+  "automotive",
+  "office",
+  "photography",
+];
